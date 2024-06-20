@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+}
+h2{
+    background-color: #081b31;
+    color: #fff;
+    text-align: center;
+    height: 5rem;
+    line-height: 5rem;
+}
+img{
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.choice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 165px;
+    width: 165px;
+    border-radius: 50%;
+}
+.choices{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    margin: 5rem;
+}
+.score-board{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-top: 2rem;
+    gap: 4rem;
+}
+#U-score,#C-score{
+    font-size: 2rem;
+}
+.game-turn{
+    margin: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#msg{
+    
+    font-size: 2rem;
+    background-color: #081b31;
+    color: #fff;
+    text-align: center;
+    display: inline;
+    border-radius: 2rem;
+    padding: 1rem;
+   
+    
+  
+  
+}
+.choice:hover{
+    cursor: pointer;
+    background-color:#4378b4 ;
+}
+
+
+    </style>
+</head>
+<body> 
+    <h2>Rock Paper Scissors</h2>
+    <div class="container">
+        <div class="choices">
+            <div class="choice" id="rock">
+                <img src="./Rock.png" alt="Rock" >
+            </div>
+            <div class="choice" id="paper">
+                <img src="./paper.png" alt="paper" >
+            </div>
+            <div class="choice" id="scissors">
+                <img src="./Scissors.png" alt="Scissors" >
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="score-board">
+        <div class="User-score" >
+           
+            <p id="U-score">0</p>
+            <p>User</p>
+        </div>
+        <div class="computer-score" >
+           
+            <p id="C-score">0</p>
+            <p>Computer</p>
+        </div>
+    </div>
+    <div class="game-turn" >
+        <p id="msg">Your's Turn</p>
+    </div>
+ 
+<script >
+    
+let userscore=0;
+let computerscore=0;
+const choices=document.querySelectorAll('.choice');
+ const msg=document.querySelector('#msg');
+ const userscorepara=document.querySelector('#U-score');
+ const computerscorepara=document.querySelector('#C-score');
+const compgchoice=()=>{
+    const compoptions=['rock','paper','scissors'];
+    const idx= Math.floor(Math.random()*3);
+    return compoptions[idx];
+}
+const drawgame=()=>{
+    console.log("game was draw.");
+    msg.innerText=" game was draw Play again";
+    msg.style.backgroundColor ='grey';
+
+}
+const showWinner=(userwin ,userchoice,compchoice)=>{
+    if(userwin){
+        userscore++;
+        userscorepara.innerText=userscore;
+        msg.innerText=`Niggaa I win!!! your ${userchoice} beats ${compchoice}`;
+        msg.style.backgroundColor ='green'
+    }else{
+        computerscore++;
+        computerscorepara.innerText=computerscore;
+        console.log("Computer wins!!");
+        msg.innerText=` Computer wins!! ${compchoice} beats  your ${userchoice}`;
+        msg.style.backgroundColor ='red'
+    }
+}
+
+const playgame=(userchoice)=>{
+    console.log("user choice = ", userchoice);
+    const compchoice=compgchoice();
+    console.log("computer choice = ", compchoice);
+    if(userchoice===compchoice){
+drawgame();
+    }else{
+        let userwin=true;
+        if(userchoice ==='rock'){
+           userwin= compchoice==='paper'?false:true;
+        }else if( userchoice==='paper'){
+            userwin=compchoice==='scissors'?false:true;
+        }else{
+            userwin=compchoice==='rock'?false:true;
+
+        }
+        showWinner(userwin,userchoice,compchoice);
+
+        
+    }
+};
+choices.forEach((choice)=>{
+    console.log(choice);
+    choice.addEventListener('click',()=>{
+        const userchoice=choice.getAttribute('id');
+        playgame(userchoice);
+       
+        
+});
+});
+</script>
+</body>
+
+</html>
